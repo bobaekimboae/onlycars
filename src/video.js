@@ -96,9 +96,17 @@ function drawCover(context, image, width, height, zoom = 1) {
 }
 
 function drawText(context, text, x, y, maxWidth, font, color = "#ffffff") {
-  context.font = font;
+  let fittedFont = font;
+  const fontSize = Number(font.match(/([\d.]+)px/)?.[1] || 32);
+  context.font = fittedFont;
   context.fillStyle = color;
   let value = String(text || "");
+  let fittedSize = fontSize;
+  while (value && context.measureText(value).width > maxWidth && fittedSize > 18) {
+    fittedSize -= 1;
+    fittedFont = font.replace(/([\d.]+)px/, `${fittedSize}px`);
+    context.font = fittedFont;
+  }
   while (value && context.measureText(value).width > maxWidth) value = `${value.slice(0, -2)}…`;
   context.fillText(value, x, y);
 }
@@ -242,3 +250,4 @@ export async function previewMusic(trackId, style = "luxury", duration = 6) {
 }
 
 export const MUSIC_TRACKS = TRACKS;
+
