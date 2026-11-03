@@ -242,4 +242,3 @@ export async function previewMusic(trackId, style = "luxury", duration = 6) {
 }
 
 export const MUSIC_TRACKS = TRACKS;
-
