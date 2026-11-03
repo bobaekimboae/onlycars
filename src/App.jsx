@@ -434,7 +434,8 @@ function Dashboard({ projects, onNavigate }) {
 }
 
 function DashboardProjectCard({ project, onNavigate }) {
-  const cover = useObjectUrls(project.images.slice(0, 1))[0];
+  const coverRecords = useMemo(() => project.images.slice(0, 1), [project.images]);
+  const cover = useObjectUrls(coverRecords)[0];
   return <button className="dashboard-project" onClick={() => onNavigate({ type: "edit", id: project.id })}><img src={cover} alt="" /><span className="dashboard-project-info"><strong>{project.vehicle.make} {project.vehicle.model}</strong><small>{project.images.length}장 · {project.vehicle.year || "연식 미입력"} · {project.video ? "영상 완성" : "초안"}</small></span><ArrowRight size={18} /></button>;
 }
 
